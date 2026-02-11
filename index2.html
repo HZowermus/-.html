@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тот, кто это читает, гей</title>
+<style>
+body{
+    margin:0;
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+}
+.top-bar{
+    background:#007ee5;
+    color:white;
+    padding:15px 20px;
+    font-weight:bold;
+    font-size:20px;
+}
+.container{
+    max-width:420px;
+    margin:100px auto;
+    background:white;
+    padding:30px 25px;
+    border-radius:8px;
+    box-shadow:0 0 15px rgba(0,0,0,0.1);
+    text-align:center;
+}
+.file-icon{
+    font-size:60px;
+    margin-bottom:10px;
+}
+.file-name{
+    font-size:18px;
+    margin-bottom:5px;
+}
+.file-size{
+    font-size:14px;
+    color:gray;
+    margin-bottom:20px;
+}
+button{
+    background:#007ee5;
+    color:white;
+    border:none;
+    padding:12px 28px;
+    border-radius:5px;
+    font-size:16px;
+    cursor:pointer;
+}
+.progress-area{
+    display:none;
+    margin-top:25px;
+    text-align:left;
+}
+.progress-bg{
+    width:100%;
+    background:#ddd;
+    border-radius:10px;
+    overflow:hidden;
+    height:16px;
+}
+.progress-bar{
+    width:0%;
+    height:100%;
+    background:#007ee5;
+}
+.info{
+    margin-top:10px;
+    font-size:13px;
+    line-height:1.6;
+}
+.status{
+    margin-top:10px;
+    font-weight:bold;
+    text-align:center;
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">загрузчик файлов</div>
+
+<div class="container">
+    <div class="file-icon">📄</div>
+    <div class="file-name">Dosya.zip</div>
+    <div class="file-size">Boyut: 842 MB</div>
+
+    <button onclick="startDownload()">İndir</button>
+
+    <div class="progress-area" id="progressArea">
+        <div class="progress-bg">
+            <div class="progress-bar" id="bar"></div>
+        </div>
+
+        <div class="info">
+            <div>İndirilen: <span id="downloaded">0 MB</span> / 842 MB</div>
+            <div>Hız: <span id="speed">0 MB/s</span></div>
+            <div>Kalan Süre: <span id="time">Hesaplanıyor...</span></div>
+        </div>
+
+        <div class="status" id="status">Bağlantı kuruluyor...</div>
+    </div>
+</div>
+
+<script>
+const totalSize = 842; // MB
+let downloaded = 0;
+
+function startDownload(){
+    document.querySelector("button").style.display="none";
+    document.getElementById("progressArea").style.display="block";
+
+    const bar = document.getElementById("bar");
+    const downloadedText = document.getElementById("downloaded");
+    const speedText = document.getElementById("speed");
+    const timeText = document.getElementById("time");
+    const status = document.getElementById("status");
+
+    let interval = setInterval(()=>{
+
+        let speed = (Math.random()*4+2).toFixed(2); // 2 - 6 MB/s arası
+        downloaded += parseFloat(speed);
+
+        if(downloaded >= totalSize){
+            downloaded = totalSize;
+            clearInterval(interval);
+            status.innerText = "İndirme Tamamlandı ✔";
+            speedText.innerText = "0 MB/s";
+            timeText.innerText = "0 sn";
+        } else {
+            status.innerText = "Dosya indiriliyor...";
+        }
+
+        let percent = (downloaded / totalSize) * 100;
+
+        bar.style.width = percent + "%";
+        downloadedText.innerText = downloaded.toFixed(1) + " MB";
+        speedText.innerText = speed + " MB/s";
+
+        let remaining = ((totalSize - downloaded) / speed).toFixed(0);
+        timeText.innerText = remaining + " sn";
+
+    },1000);
+}
+</script>
+
+</body>
+</html>
