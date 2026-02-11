@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тот, кто это читает, гей</title>
+
+<style>
+    body{
+        margin:0;
+        background:black;
+        color:#c20000;
+        font-family:Consolas, monospace;
+        height:100vh;
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+        overflow:hidden;
+    }
+
+    #letters{
+        font-size:28px;
+        width:90%;
+        height:60%;
+        text-align:center;
+        line-height:40px;
+        word-wrap:break-word;
+        user-select:none;
+    }
+
+    button{
+        margin-top:30px;
+        padding:15px 40px;
+        font-size:18px;
+        background:#c20000;
+        border:none;
+        cursor:pointer;
+        font-weight:bold;
+    }
+
+    button:hover{
+        background:white;
+        color:black;
+    }
+</style>
+</head>
+<body>
+
+<div id="letters"></div>
+<button onclick="fakeDownload()">DOWNLOAD</button>
+
+<script>
+// Kiril (Rus alfabesi) karakterleri
+const chars = "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
+
+function randomText(){
+    let text = "";
+    for(let i=0;i<35;i++){
+        const rand = chars[Math.floor(Math.random()*chars.length)];
+        text += rand + " ";
+    }
+    document.getElementById("letters").textContent = text;
+}
+
+// Her 200ms'de değişsin
+setInterval(randomText, 200);
+
+// Buton fonksiyonu
+function fakeDownload(){
+    const confirmed = confirm("Вы подтверждаете скидку? [Download]");
+    if(confirmed){
+        // Kullanıcı Tamam dedi, başka sayfaya yönlendiriyoruz
+        window.location.href = "Тот, кто это читает, гей.html"; // burayı istediğin link ile değiştir
+    }
+}
+</script>
+
+</body>
+</html>
